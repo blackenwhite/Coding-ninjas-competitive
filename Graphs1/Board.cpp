@@ -34,24 +34,75 @@ Sample Output :
 
 using namespace std;
 
-int helper(char board[][MAXN], int n, int m, int* visited){
-	for (int i = 0; i < n; ++i)
-	{
-		for (int j = 0; j < m; ++j)
-		{
-			if ()
-			{
-				
-			}
-		}
-	}
+#define li long int
+li yes,N,M;
+li check[50][50];
+
+void dfs(char board[][MAXN],li i,li j,li i0,li j0){
+    check[i][j]=1;
+    if(!(i==i0 && j+1==j0) && j+1<M){
+        if(board[i][j]==board[i][j+1]){
+            if(check[i][j+1]){
+                yes=1;
+                return;
+            }
+            dfs(board,i,j+1,i,j);
+        }
+        if(yes) return;
+    }
+    if(yes) return;
+    if(!(i+1==i0 && j==j0)&& i+1<N){
+        if(board[i+1][j]==board[i][j]){
+            if(check[i+1][j]){
+                yes=1;
+                return;
+            }
+            dfs(board,i+1,j,i,j);
+        }
+        if(yes) return;
+    }
+    if(yes) return;
+    if(!(i==i0 && j-1==j0)&& j-1>=0){
+        if(board[i][j-1]==board[i][j]){
+            if(check[i][j-1]){
+                yes=1;
+                return;
+            }
+            dfs(board,i,j-1,i,j);
+        }
+        if(yes) return;
+    }
+    if(yes) return;
+    if(!(i-1==i0 && j==j0)&& i-1>=0){
+        if(board[i-1][j]==board[i][j]){
+            if(check[i-1][j]){
+                yes=1;
+                return;
+            }
+            dfs(board,i-1,j,i,j);
+        }
+        if(yes) return;
+    }
+    if (yes) return;
+    check[i][j]=2;
+    
 }
 
 int solve(char board[][MAXN],int n, int m)
 {
-	int* visited = new int[n]();
-
-	return helper(board, n, m, visited);
+	// Write your code here.
+    N=n;
+    M=m;
+    memset(check,0,sizeof(check));
+    yes=0;
+    for (li i=0;i<n;i++){
+        for (li j=0;j<m;j++){
+            if(check[i][j]==0) dfs(board,i,j,-1,-1);
+            if(yes) break;
+        }
+        if(yes) break;
+    }
+    return yes;
 }
 
 int main( int argc , char ** argv )
