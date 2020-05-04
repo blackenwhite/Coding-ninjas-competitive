@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Triplet{
+public:
+  int x;
+  int y;
+  int gcd;
+};
+
+Triplet extendedEuclid(int a,int b){
+  Triplet ans;
+  // Base case
+  if(b==0){
+    ans.x=1;
+    ans.y=0;
+    ans.gcd=a;
+    return ans;
+  }
+  Triplet smallAns=extendedEuclid(b,a%b);
+  ans.gcd=smallAns.gcd;
+  ans.x=smallAns.y;
+  ans.y=smallAns.x-(a/b)*smallAns.y;
+  return ans;
+}
+
+int main(){
+  Triplet ans=extendedEuclid(15,10);
+  cout<<ans.x<<" "<<ans.y<<" "<<ans.gcd<<endl;
+}
