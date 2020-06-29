@@ -1,0 +1,131 @@
+A number is called n-factorful if it has exactly n distinct prime factors. Given positive integers a, b, and n, your task is to find the number of integers between a and b, inclusive, that are n-factorful. We consider 1 to be 0-factorful.
+Input
+
+Your input will consist of a single integer T followed by a newline and T test cases. Each test cases consists of a single line containing integers a, b, and n as described above.
+
+Output
+
+Output for each test case one line containing the number of n-factorful integers in [a, b].
+
+Constraints
+
+T < 10000
+
+1 ≤ a ≤ b ≤ 10^6
+
+0 ≤ n ≤ 10
+
+Sample Input
+
+5
+1 3 1
+1 10 2
+1 10 3
+1 100 3
+1 1000 0
+
+Sample Output
+
+2 
+2
+0
+8
+1
+
+-----------------------Solution----------------------//nabajyoti majumdar
+#include <bits/stdc++.h>
+using namespace std;
+#define MAX 1000005
+#define pb push_back
+
+/*class c{
+public:
+    map<int,int> mp;
+    int t=0;
+    void factor_insert(int p){
+      mp[p]++;
+      t++;
+    }
+
+
+
+
+};*/
+vector<int> v(MAX,0);
+
+
+
+vector<int>* sieve(){
+	bool isPrime[MAX];
+
+	vector<int>* primes = new vector<int>();
+	for(int i=2;i<=MAX;i++){
+		isPrime[i] = true;
+	}
+	for(int i=2;i*i<=MAX;i++){
+
+		if(isPrime[i]){
+			for(int j=i*i;j<=MAX;j+=i){
+				isPrime[j] = false;
+			}
+		}
+	}
+
+	primes->pb(2);
+	for(int i=3;i<=MAX;i+=2){
+		if(isPrime[i]){
+			primes->pb(i);
+		}
+	}
+	return primes;
+
+}
+
+void update(){
+  vector<int>* primes=sieve();
+  for(int i=0;i<primes->size();i++){
+    int pr=primes->at(i);
+    for(int j=pr;j<MAX;j+=pr){
+      v[j]++;;
+    }
+  }
+
+}
+
+void solve(){
+  int a,b,n;
+  cin>>a>>b>>n;
+  /*if(n==1){
+    cout<<1<<endl;
+    return;
+  }*/
+  int ans=0;
+  for(int i=a;i<=b;i++){
+
+    if(v[i]==n) {
+      //cout<<i<<endl;
+      ans++;}
+  }
+  cout<<ans<<endl;
+  return;
+
+}
+
+
+int main(){
+  int t;
+  update();
+  /*
+  for(int i=2;i<20;i++){
+    cout<<i<<"------------"<<endl;
+    for(auto it:v[i].mp){
+      cout<<it.first<<" "<<it.second<<endl;
+    }
+  }*/
+
+
+  cin>>t;
+  while(t--){
+    solve();
+  }
+}
