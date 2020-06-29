@@ -1,0 +1,103 @@
+A cube free number is a number who’s none of the divisor is a cube number (A cube number is a cube of a integer like 8 (2 * 2 * 2) , 27 (3 * 3 * 3) ). So cube free numbers are 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 17, 18 etc (we will consider 1 as cube free). 8, 16, 24, 27, 32 etc are not cube free number. So the position of 1 among the cube free numbers is 1, position of 2 is 2, 3 is 3 and position of 10 is 9. Given a positive number you have to say if its a cube free number and if yes then tell its position among cube free numbers.
+Input
+
+First line of the test case will be the number of test case T (1 <= T <= 100000) . Then T lines follows. On each line you will find a integer number n (1 <= n <= 1000000).
+
+Output
+
+For each input line, print a line containing “Case I: ”, where I is the test case number. Then if it is not a cube free number then print “Not Cube Free”. Otherwise print its position among the cube free numbers.
+
+Sample Input:
+
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+Sample Output:
+
+Case 1: 1
+Case 2: 2
+Case 3: 3
+Case 4: 4
+Case 5: 5
+Case 6: 6
+Case 7: 7
+Case 8: Not Cube Free
+Case 9: 8
+Case 10: 9
+
+----------------------------------------Solution--------------------//nabajyoti majumdar
+#include <bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define M 1000005
+int a[M]={0};
+
+vector<int>* sieve(){
+  bool isPrime[101];
+  vector<int>* primes=new vector<int>();
+  for(int i=2;i<=100;i++) isPrime[i]=true;
+
+  for(int i=2;i*i<=101;i++){
+    if(isPrime[i]){
+      for(int j=i*i;j<=100;j+=i){
+        isPrime[j]=false;
+      }
+    }
+  }
+  primes->pb(2);
+  for(int i=3;i<=100;i+=2){
+    if(isPrime[i])primes->pb(i);
+  }
+  return primes;
+}
+
+void update(){
+  vector<int>* primes=sieve();
+  for(int i=0;i<primes->size();i++){
+    int pr=primes->at(i);
+    for(int j=pr*pr*pr;j<M;j+=pr*pr*pr){
+      a[j]=-1;
+    }
+  }
+  a[1]=1;
+  int count=1;
+  for(int i=2;i<M;i++){
+    if(a[i]!=-1) a[i]=++count;
+  }
+  return;
+}
+
+void solve(int t){
+  int x;
+  cin>>x;
+  cout<<"Case "<<t<<": ";
+  if(a[x]==-1){
+    cout<<"Not Cube Free"<<endl;
+    return;
+  }else{
+    cout<<a[x]<<endl;
+    return;
+  }
+}
+
+int main(){
+  int t;
+  cin>>t;
+  update();
+  int x;
+	int p=1;
+
+  while(t--){
+    solve(p++);
+
+  }
+}
