@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define N 1000000000
+int main(){
+  unordered_map<int,int>mp;
+  int n;
+  cin>>n;
+  int temp;
+  for(int i=0;i<n;i++){
+    cin>>temp;
+    mp[temp]++;
+  }
+  int ans=0;
+  for(auto i:mp){
+    //cout<<i.first<<".."<<endl;
+
+    int count=0;
+    for(int j=0;j<=5;j++){
+      if(mp.find(i.first+j)!=mp.end()) count+=mp[i.first+j];
+    }
+    ans=max(ans,count);
+
+  }
+  cout<<ans<<endl;
+}
